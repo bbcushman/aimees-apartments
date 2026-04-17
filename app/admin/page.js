@@ -3,6 +3,58 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabase";
 
+function TestimonialsTab() {
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  async function fetchTestimonials() {
+    const { data } = await supabase.from("testimonials").select("*").order("created_at", { ascending: false });
+    setTestimonials(data || []);
+    setLoading(false);
+  }
+
+  useEffect(() => { fetchTestimonials(); }, []);
+
+  async function approve(id) {
+    await supabase.from("testimonials").update({ approved: true }).eq("id", id);
+    fetchTestimonials();
+  }
+
+  async function remove(id) {
+    if (!confirm("Delete this testimonial?")) return;
+    await supabase.from("testimonials").delete().eq("id", id);
+    fetchTestimonials();
+  }
+
+  if (loading) return <p className="text-stone-400 text-sm">Loading...</p>;
+  if (testimonials.length === 0) return <p className="text-stone-400 text-sm">No testimonials yet.</p>;
+
+  return (
+    <div className="space-y-3">
+      {testimonials.map(t => (
+        <div key={t.id} className="bg-white rounded-xl border border-stone-100 p-4 flex items-start gap-4">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1">
+              <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${t.approved ? "bg-green-50 text-green-600" : "bg-amber-50 text-amber-600"}`}>
+                {t.approved ? "Published" : "Pending"}
+              </span>
+              <p className="font-bold text-stone-800 text-sm">{t.name}</p>
+              {t.neighborhood && <p className="text-stone-400 text-xs">{t.neighborhood}</p>}
+            </div>
+            <p className="text-stone-500 text-sm italic">"{t.quote}"</p>
+          </div>
+          <div className="flex gap-2 shrink-0">
+            {!t.approved && (
+              <button onClick={() => approve(t.id)} className="text-xs border border-green-200 text-green-600 px-3 py-1.5 rounded-full hover:bg-green-50">Approve</button>
+            )}
+            <button onClick={() => remove(t.id)} className="text-xs border border-red-100 text-red-400 px-3 py-1.5 rounded-full hover:bg-red-50">Delete</button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Admin() {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState("");
@@ -60,9 +112,7 @@ export default function Admin() {
     if (!photoFile) return null;
     const ext = photoFile.name.split(".").pop();
     const fileName = `${Date.now()}.${ext}`;
-    const { error } = await supabase.storage
-      .from("listings-photos")
-      .upload(fileName, photoFile);
+    const { error } = await supabase.storage.from("listings-photos").upload(fileName, photoFile);
     if (error) return null;
     const { data } = supabase.storage.from("listings-photos").getPublicUrl(fileName);
     return data.publicUrl;
@@ -140,13 +190,7 @@ export default function Admin() {
           className="w-full border border-stone-200 rounded-lg px-4 py-3 text-sm mb-3 outline-none focus:border-stone-400"
         />
         {error && <p className="text-red-400 text-xs mb-3">{error}</p>}
-        <button
-          onClick={handleLogin}
-          className="w-full text-white font-semibold py-3 rounded-lg transition-colors"
-          style={{backgroundColor: "#c2446e"}}
-        >
-          Enter
-        </button>
+        <button onClick={handleLogin} className="w-full text-white font-semibold py-3 rounded-lg transition-colors" style={{backgroundColor: "#c2446e"}}>Enter</button>
       </div>
     </div>
   );
@@ -158,24 +202,22 @@ export default function Admin() {
         <a href="/listings" className="text-sm text-stone-400 hover:text-stone-600">View public listings →</a>
       </div>
 
-      {/* Tabs */}
       <div className="max-w-5xl mx-auto px-8 pt-8">
-        <div className="flex gap-2 mb-8">
-          {["listings", "subscribers"].map(t => (
+        <div className="flex gap-2 mb-8 flex-wrap">
+          {["listings", "subscribers", "testimonials"].map(t => (
             <button
               key={t}
               onClick={() => setTab(t)}
               className={`px-5 py-2 rounded-full text-sm font-semibold transition-colors ${tab === t ? "text-white" : "bg-white border border-stone-200 text-stone-500 hover:bg-stone-50"}`}
               style={tab === t ? {backgroundColor: "#c2446e"} : {}}
             >
-              {t === "listings" ? "Listings" : `Subscribers (${subscribers.length})`}
+              {t === "listings" ? "Listings" : t === "subscribers" ? `Subscribers (${subscribers.length})` : "Testimonials"}
             </button>
           ))}
         </div>
 
         {tab === "listings" && (
           <>
-            {/* Add listing form */}
             <div className="bg-white rounded-xl border border-stone-200 p-6 mb-10">
               <h2 className="font-bold text-stone-900 text-lg mb-6">Add New Listing</h2>
               <div className="grid md:grid-cols-2 gap-4">
@@ -213,7 +255,6 @@ export default function Admin() {
                 </div>
               </div>
 
-              {/* Photo upload */}
               <div className="mt-4">
                 <label className="block text-xs font-semibold text-stone-500 uppercase tracking-widest mb-2">Photo</label>
                 <div className="flex items-start gap-4">
@@ -226,10 +267,7 @@ export default function Admin() {
                   {photoPreview && (
                     <div className="relative">
                       <img src={photoPreview} alt="preview" className="w-32 h-24 object-cover rounded-xl border border-stone-200" />
-                      <button
-                        onClick={() => { setPhotoFile(null); setPhotoPreview(null); }}
-                        className="absolute -top-2 -right-2 bg-white border border-stone-200 rounded-full w-6 h-6 text-xs text-stone-400 hover:text-red-400"
-                      >✕</button>
+                      <button onClick={() => { setPhotoFile(null); setPhotoPreview(null); }} className="absolute -top-2 -right-2 bg-white border border-stone-200 rounded-full w-6 h-6 text-xs text-stone-400 hover:text-red-400">✕</button>
                     </div>
                   )}
                 </div>
@@ -274,7 +312,6 @@ export default function Admin() {
               </button>
             </div>
 
-            {/* Listings table */}
             <h2 className="font-bold text-stone-900 text-lg mb-4">All Listings</h2>
             {loading ? (
               <p className="text-stone-400 text-sm">Loading...</p>
@@ -299,17 +336,11 @@ export default function Admin() {
                     </div>
                     <div className="flex gap-2 shrink-0">
                       {listing.status === "Active" ? (
-                        <button onClick={() => updateStatus(listing.id, "Rented")} className="text-xs border border-stone-200 text-stone-500 px-3 py-1.5 rounded-full hover:bg-stone-50">
-                          Mark Rented
-                        </button>
+                        <button onClick={() => updateStatus(listing.id, "Rented")} className="text-xs border border-stone-200 text-stone-500 px-3 py-1.5 rounded-full hover:bg-stone-50">Mark Rented</button>
                       ) : (
-                        <button onClick={() => updateStatus(listing.id, "Active")} className="text-xs border border-stone-200 text-stone-500 px-3 py-1.5 rounded-full hover:bg-stone-50">
-                          Mark Active
-                        </button>
+                        <button onClick={() => updateStatus(listing.id, "Active")} className="text-xs border border-stone-200 text-stone-500 px-3 py-1.5 rounded-full hover:bg-stone-50">Mark Active</button>
                       )}
-                      <button onClick={() => deleteListing(listing.id)} className="text-xs border border-red-100 text-red-400 px-3 py-1.5 rounded-full hover:bg-red-50">
-                        Delete
-                      </button>
+                      <button onClick={() => deleteListing(listing.id)} className="text-xs border border-red-100 text-red-400 px-3 py-1.5 rounded-full hover:bg-red-50">Delete</button>
                     </div>
                   </div>
                 ))}
@@ -322,12 +353,7 @@ export default function Admin() {
           <>
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-bold text-stone-900 text-lg">{subscribers.length} Subscribers</h2>
-              <button
-                onClick={exportCSV}
-                className="text-sm font-semibold border border-stone-200 px-5 py-2 rounded-full hover:bg-stone-50 text-stone-600"
-              >
-                Export CSV
-              </button>
+              <button onClick={exportCSV} className="text-sm font-semibold border border-stone-200 px-5 py-2 rounded-full hover:bg-stone-50 text-stone-600">Export CSV</button>
             </div>
             {subscribers.length === 0 ? (
               <p className="text-stone-400 text-sm">No subscribers yet.</p>
@@ -361,6 +387,9 @@ export default function Admin() {
             )}
           </>
         )}
+
+        {tab === "testimonials" && <TestimonialsTab />}
+
       </div>
     </div>
   );
