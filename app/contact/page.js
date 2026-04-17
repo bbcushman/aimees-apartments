@@ -26,6 +26,7 @@ export default function Contact() {
             <a href="/apply" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">How to Apply</a>
             <a href="/tips" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Tips</a>
             <a href="/listings" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Listings</a>
+            <a href="/testimonials" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Testimonials</a>
             <a href="/contact" className="text-sm font-bold transition-colors" style={{color: "#c2446e"}}>Contact</a>
             <a href="/admin" className="text-sm text-stone-400 hover:text-stone-600 transition-colors">Admin</a>
           </div>
@@ -37,6 +38,7 @@ export default function Contact() {
             <a href="/apply" className="py-1">How to Apply</a>
             <a href="/tips" className="py-1">Tips</a>
             <a href="/listings" className="py-1">Listings</a>
+            <a href="/testimonials" className="py-1">Testimonials</a>
             <a href="/contact" className="py-1 font-bold" style={{color: "#c2446e"}}>Contact</a>
             <a href="/admin" className="py-1 text-stone-400">Admin</a>
           </div>
