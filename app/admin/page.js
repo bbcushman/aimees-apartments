@@ -225,10 +225,10 @@ export default function Admin() {
         {menuOpen && (
           <div className="md:hidden bg-white border-t border-stone-100 px-6 py-4 flex flex-col gap-4 text-sm text-stone-600">
             <a href="/" className="py-1">← Home</a>
-            <a href="/listings" className="py-1">Listings</a>
+            <button onClick={() => { setTab("listings"); setMenuOpen(false); }} className="py-1 text-left">Listings</button>
             <a href="/previous" className="py-1">Previous Listings</a>
-            <a href="/testimonials" className="py-1">Testimonials</a>
-            <a href="/subscribers" className="py-1">Subscribers</a>
+            <button onClick={() => { setTab("testimonials"); setMenuOpen(false); }} className="py-1 text-left">Testimonials</button>
+            <button onClick={() => { setTab("subscribers"); setMenuOpen(false); }} className="py-1 text-left">Subscribers</button>
             <button onClick={handleLogout} className="py-1 text-left text-red-400">Log out</button>
           </div>
         )}
