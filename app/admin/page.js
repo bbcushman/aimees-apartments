@@ -63,6 +63,7 @@ export default function Admin() {
   const [subscribers, setSubscribers] = useState([]);
   const [tab, setTab] = useState("listings");
   const [loading, setLoading] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [form, setForm] = useState({
     address: "", neighborhood: "", rent: "", beds: "", baths: "",
     availability_date: "", pet_policy: "", laundry: "",
@@ -73,13 +74,24 @@ export default function Admin() {
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState("");
 
+  useEffect(() => {
+    const saved = localStorage.getItem("aimee_admin_authed");
+    if (saved === "true") setAuthed(true);
+  }, []);
+
   function handleLogin() {
     if (password === "FlatironAimee10") {
       setAuthed(true);
       setError("");
+      localStorage.setItem("aimee_admin_authed", "true");
     } else {
       setError("Incorrect password.");
     }
+  }
+
+  function handleLogout() {
+    setAuthed(false);
+    localStorage.removeItem("aimee_admin_authed");
   }
 
   async function fetchListings() {
@@ -179,7 +191,7 @@ export default function Admin() {
   if (!authed) return (
     <div className="min-h-screen bg-stone-50 flex items-center justify-center px-6">
       <div className="bg-white rounded-2xl border border-stone-200 p-8 w-full max-w-sm text-center" style={{fontFamily: "sans-serif"}}>
-        <div className="text-lg font-bold mb-1" style={{color: "#c2446e"}}>Aimee's Apartments</div>
+        <a href="/" className="text-lg font-bold mb-1 block" style={{color: "#c2446e"}}>Aimee's Apartments</a>
         <p className="text-stone-400 text-sm mb-6">Admin access only</p>
         <input
           type="password"
@@ -197,16 +209,32 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-stone-50" style={{fontFamily: "sans-serif"}}>
-      <div className="bg-white border-b border-stone-200 px-4 sm:px-8 py-4 flex items-center justify-between">
-  <a href="/" className="font-bold" style={{color: "#c2446e"}}>Aimee's Apartments — Admin</a>
-  <div className="flex items-center gap-4" style={{fontFamily: "sans-serif"}}>
-    <a href="/listings" className="text-sm text-stone-400 hover:text-stone-600">Listings</a>
-    <a href="/testimonials" className="text-sm text-stone-400 hover:text-stone-600">Testimonials</a>
-    <a href="/subscribe" className="text-sm text-stone-400 hover:text-stone-600">Subscribe page</a>
-  </div>
-</div>
 
-      <div className="max-w-5xl mx-auto px-8 pt-8">
+      {/* Nav */}
+      <div className="bg-white border-b border-stone-200">
+        <div className="px-4 sm:px-8 py-4 flex items-center justify-between">
+          <a href="/" className="font-bold" style={{color: "#c2446e"}}>Aimee's Apartments — Admin</a>
+          <div className="hidden md:flex items-center gap-4">
+            <a href="/listings" className="text-sm text-stone-400 hover:text-stone-600">Listings</a>
+            <a href="/testimonials" className="text-sm text-stone-400 hover:text-stone-600">Testimonials</a>
+            <a href="/subscribe" className="text-sm text-stone-400 hover:text-stone-600">Subscribe page</a>
+            <button onClick={handleLogout} className="text-sm text-stone-400 hover:text-red-400">Log out</button>
+          </div>
+          <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-stone-600 text-xl p-2">☰</button>
+        </div>
+        {menuOpen && (
+          <div className="md:hidden bg-white border-t border-stone-100 px-6 py-4 flex flex-col gap-4 text-sm text-stone-600">
+            <a href="/" className="py-1">← Home</a>
+            <a href="/listings" className="py-1">Listings</a>
+            <a href="/previous" className="py-1">Previous Listings</a>
+            <a href="/testimonials" className="py-1">Testimonials</a>
+            <a href="/subscribers" className="py-1">Subscribers</a>
+            <button onClick={handleLogout} className="py-1 text-left text-red-400">Log out</button>
+          </div>
+        )}
+      </div>
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-8">
         <div className="flex gap-2 mb-8 flex-wrap">
           {["listings", "subscribers", "testimonials"].map(t => (
             <button
@@ -322,7 +350,7 @@ export default function Admin() {
             ) : listings.length === 0 ? (
               <p className="text-stone-400 text-sm">No listings yet.</p>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-3 pb-10">
                 {listings.map(listing => (
                   <div key={listing.id} className="bg-white rounded-xl border border-stone-100 p-4 flex items-start gap-4">
                     {listing.photo_url && (
@@ -338,7 +366,7 @@ export default function Admin() {
                       <p className="text-stone-400 text-xs">{listing.neighborhood} · {listing.beds} bed · {listing.baths} bath · ${listing.rent?.toLocaleString()}/mo</p>
                       {listing.description && <p className="text-stone-500 text-xs mt-1 truncate">{listing.description}</p>}
                     </div>
-                    <div className="flex gap-2 shrink-0">
+                    <div className="flex flex-col sm:flex-row gap-2 shrink-0">
                       {listing.status === "Active" ? (
                         <button onClick={() => updateStatus(listing.id, "Rented")} className="text-xs border border-stone-200 text-stone-500 px-3 py-1.5 rounded-full hover:bg-stone-50">Mark Rented</button>
                       ) : (
@@ -362,7 +390,7 @@ export default function Admin() {
             {subscribers.length === 0 ? (
               <p className="text-stone-400 text-sm">No subscribers yet.</p>
             ) : (
-              <div className="bg-white rounded-xl border border-stone-100 overflow-hidden">
+              <div className="bg-white rounded-xl border border-stone-100 overflow-x-auto pb-10">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-stone-100 text-left">
