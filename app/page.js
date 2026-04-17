@@ -28,6 +28,7 @@ export default function RealEstate() {
             <a href="/tips" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Tips</a>
             <a href="/listings" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Listings</a>
             <a href="/contact" className="text-sm font-semibold text-white px-5 py-2 rounded-full transition-all hover:opacity-90" style={{backgroundColor: "#c2446e", fontFamily: "sans-serif"}}>Contact</a>
+            <a href="/admin" className="text-sm text-stone-400 hover:text-stone-600 transition-colors">Admin</a>
           </div>
           <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-stone-600 text-xl">☰</button>
         </div>
@@ -36,7 +37,9 @@ export default function RealEstate() {
             <a href="/">Home</a>
             <a href="/apply">How to Apply</a>
             <a href="/tips">Tips</a>
+            <a href="/listings">Listings</a>
             <a href="/contact" className="font-bold" style={{color: "#c2446e"}}>Contact</a>
+            <a href="/admin" className="text-stone-400">Admin</a>
           </div>
         )}
       </nav>
@@ -188,13 +191,16 @@ export default function RealEstate() {
           Whether you&apos;re looking for your next home or need a trusted broker for your building, I&apos;d love to connect. The best way to reach me is a phone call — I always pick up.
         </p>
         <div className="flex flex-wrap justify-center gap-4" style={{fontFamily: "sans-serif"}}>
-          <a href="/contact" className="text-white font-semibold px-7 py-3 rounded-full text-sm hover:opacity-90 transition-opacity" style={{backgroundColor: "#c2446e"}}>
-            Contact Aimee
-          </a>
-          <a href="tel:+16462419797" className="font-semibold px-7 py-3 rounded-full text-sm border border-stone-300 text-stone-600 hover:bg-stone-100 transition-colors">
-            (646) 241-9797
-          </a>
-        </div>
+  <a href="/contact" className="text-white font-semibold px-7 py-3 rounded-full text-sm hover:opacity-90 transition-opacity" style={{backgroundColor: "#c2446e"}}>
+    Contact Aimee
+  </a>
+  <a href="tel:+16462419797" className="font-semibold px-7 py-3 rounded-full text-sm border border-stone-300 text-stone-600 hover:bg-stone-100 transition-colors">
+    (646) 241-9797
+  </a>
+  <a href="/subscribe" className="font-semibold px-7 py-3 rounded-full text-sm border border-stone-300 text-stone-600 hover:bg-stone-100 transition-colors">
+    Get Notified
+  </a>
+</div>
       </div>
 
       {/* Footer photo */}
