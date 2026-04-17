@@ -48,12 +48,8 @@ export default function Contact() {
 
           <div>
             <div className="text-xs tracking-widest uppercase font-semibold mb-3" style={{color: "#c2446e", fontFamily: "sans-serif"}}>Get in Touch</div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-stone-900 mb-5" style={{letterSpacing: "-0.5px"}}>
-              Let&apos;s find you something wonderful.
-            </h1>
-            <p className="text-stone-500 text-base leading-relaxed mb-8" style={{fontFamily: "sans-serif"}}>
-              The best way to reach me is always a phone call. I pick up on the first ring — no voicemail, no assistant, just me. Whether you&apos;re just starting to think about moving or need to sign a lease tomorrow, I&apos;m here.
-            </p>
+            <h1 className="text-3xl sm:text-4xl font-bold text-stone-900 mb-5" style={{letterSpacing: "-0.5px"}}>Let&apos;s find you something wonderful.</h1>
+            <p className="text-stone-500 text-base leading-relaxed mb-8" style={{fontFamily: "sans-serif"}}>The best way to reach me is always a phone call. I pick up on the first ring — no voicemail, no assistant, just me. Whether you&apos;re just starting to think about moving or need to sign a lease tomorrow, I&apos;m here.</p>
 
             <div className="space-y-6" style={{fontFamily: "sans-serif"}}>
               <div className="flex items-start gap-4">
@@ -64,7 +60,6 @@ export default function Contact() {
                   <p className="text-stone-400 text-xs mt-1">Call or text anytime — I always pick up.</p>
                 </div>
               </div>
-
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-white text-sm" style={{backgroundColor: "#c2446e"}}>👩‍💼</div>
                 <div>
@@ -76,13 +71,7 @@ export default function Contact() {
               </div>
             </div>
 
-            
-              href="tel:+16462419797"
-              className="mt-8 inline-block w-full sm:w-auto text-center text-white font-semibold px-8 py-4 rounded-full text-sm transition-opacity hover:opacity-90"
-              style={{backgroundColor: "#c2446e", fontFamily: "sans-serif"}}
-            >
-              <span>Call Aimee Now</span>
-            </a>
+            <a href="tel:+16462419797" className="mt-8 inline-block w-full sm:w-auto text-center text-white font-semibold px-8 py-4 rounded-full text-sm transition-opacity hover:opacity-90" style={{backgroundColor: "#c2446e", fontFamily: "sans-serif"}}>Call Aimee Now</a>
           </div>
 
           <div className="space-y-3 mt-8 md:mt-0" style={{fontFamily: "sans-serif"}}>
@@ -96,19 +85,17 @@ export default function Contact() {
               "You manage a building and need a reliable broker partner",
               "You just want to explore what's out there — no pressure",
             ].map((item, i) => (
-              <div key={i} className="flex items-start gap-3 bg-white rounded-xl p-4 border border-stone-100 shadow-sm min-h-[52px]">
+              <div key={i} className="flex items-start gap-3 bg-white rounded-xl p-4 border border-stone-100 shadow-sm">
                 <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{backgroundColor: "#c2446e"}} />
                 <p className="text-stone-600 text-sm">{item}</p>
               </div>
             ))}
-
             <div className="bg-white rounded-xl p-6 border border-stone-200 mt-4">
-              <p className="text-stone-500 text-sm leading-relaxed italic mb-3">
-                &quot;I charge low fees with top notch service. Please let me see or rent you your new home and make your dreams come true.&quot;
-              </p>
+              <p className="text-stone-500 text-sm leading-relaxed italic mb-3">&quot;I charge low fees with top notch service. Please let me see or rent you your new home and make your dreams come true.&quot;</p>
               <p className="font-bold text-sm" style={{color: "#c2446e"}}>— Aimee Grodanz, LREB</p>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -116,6 +103,7 @@ export default function Contact() {
         <p className="font-semibold text-stone-600 text-sm mb-1">Aimee Grodanz, LREB · Licensed Real Estate Broker · New York City</p>
         <p className="text-stone-400 text-xs">📞 <a href="tel:+16462419797" className="hover:underline" style={{color: "#c2446e"}}>(646) 241-9797</a></p>
       </footer>
+
     </div>
   );
 }
