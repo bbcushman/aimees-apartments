@@ -197,10 +197,14 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-stone-50" style={{fontFamily: "sans-serif"}}>
-      <div className="bg-white border-b border-stone-200 px-8 py-4 flex items-center justify-between">
-        <div className="font-bold" style={{color: "#c2446e"}}>Aimee's Apartments — Admin</div>
-        <a href="/listings" className="text-sm text-stone-400 hover:text-stone-600">View public listings →</a>
-      </div>
+      <div className="bg-white border-b border-stone-200 px-4 sm:px-8 py-4 flex items-center justify-between">
+  <a href="/" className="font-bold" style={{color: "#c2446e"}}>Aimee's Apartments — Admin</a>
+  <div className="flex items-center gap-4" style={{fontFamily: "sans-serif"}}>
+    <a href="/listings" className="text-sm text-stone-400 hover:text-stone-600">Listings</a>
+    <a href="/testimonials" className="text-sm text-stone-400 hover:text-stone-600">Testimonials</a>
+    <a href="/subscribe" className="text-sm text-stone-400 hover:text-stone-600">Subscribe page</a>
+  </div>
+</div>
 
       <div className="max-w-5xl mx-auto px-8 pt-8">
         <div className="flex gap-2 mb-8 flex-wrap">

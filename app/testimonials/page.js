@@ -34,7 +34,7 @@ export default function Testimonials() {
       <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-white shadow-md" : "bg-white/90 backdrop-blur-sm"} border-b border-stone-200`}>
         <div className="max-w-5xl mx-auto px-4 sm:px-8 py-3 flex items-center justify-between">
           <div>
-            <div className="text-lg font-bold tracking-tight" style={{color: "#c2446e"}}>Aimee's Apartments</div>
+            <a href="/" className="text-lg font-bold tracking-tight" style={{color: "#c2446e"}}>Aimee's Apartments</a>
             <div className="text-xs text-stone-400 tracking-widest uppercase" style={{fontFamily: "sans-serif"}}>Aimee Grodanz · Licensed Broker · NYC</div>
           </div>
           <div className="hidden md:flex items-center gap-8" style={{fontFamily: "sans-serif"}}>
