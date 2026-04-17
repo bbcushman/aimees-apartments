@@ -26,6 +26,7 @@ export default function RealEstate() {
             <a href="/" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Home</a>
             <a href="/apply" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">How to Apply</a>
             <a href="/tips" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Tips</a>
+            <a href="/listings" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Listings</a>
             <a href="/contact" className="text-sm font-semibold text-white px-5 py-2 rounded-full transition-all hover:opacity-90" style={{backgroundColor: "#c2446e", fontFamily: "sans-serif"}}>Contact</a>
           </div>
           <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-stone-600 text-xl">☰</button>

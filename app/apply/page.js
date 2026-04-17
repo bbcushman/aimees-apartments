@@ -24,6 +24,7 @@ export default function Apply() {
             <a href="/" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Home</a>
             <a href="/apply" className="text-sm font-bold transition-colors" style={{color: "#c2446e"}}>How to Apply</a>
             <a href="/tips" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Tips</a>
+            <a href="/listings" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Listings</a>
             <a href="/contact" className="text-sm font-semibold text-white px-5 py-2 rounded-full transition-all hover:opacity-90" style={{backgroundColor: "#c2446e"}}>Contact</a>
           </div>
         </div>
