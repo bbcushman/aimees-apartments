@@ -223,15 +223,20 @@ export default function Admin() {
           <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-stone-600 text-xl p-2">☰</button>
         </div>
         {menuOpen && (
-          <div className="md:hidden bg-white border-t border-stone-100 px-6 py-4 flex flex-col gap-4 text-sm text-stone-600">
-            <a href="/" className="py-1">← Home</a>
-            <button onClick={() => { setTab("listings"); setMenuOpen(false); }} className="py-1 text-left">Listings</button>
-            <a href="/previous" className="py-1">Previous Listings</a>
-            <button onClick={() => { setTab("testimonials"); setMenuOpen(false); }} className="py-1 text-left">Testimonials</button>
-            <button onClick={() => { setTab("subscribers"); setMenuOpen(false); }} className="py-1 text-left">Subscribers</button>
-            <button onClick={handleLogout} className="py-1 text-left text-red-400">Log out</button>
-          </div>
-        )}
+  <div className="md:hidden bg-white border-t border-stone-100 px-6 py-4 flex flex-col gap-4 text-sm text-stone-600">
+    <p className="text-xs uppercase tracking-widest text-stone-400 font-semibold">Admin</p>
+    <button onClick={() => { setTab("listings"); setMenuOpen(false); }} className="py-1 text-left">Listings</button>
+    <button onClick={() => { setTab("subscribers"); setMenuOpen(false); }} className="py-1 text-left">Subscribers</button>
+    <button onClick={() => { setTab("testimonials"); setMenuOpen(false); }} className="py-1 text-left">Testimonials</button>
+    <p className="text-xs uppercase tracking-widest text-stone-400 font-semibold mt-2">Public Pages</p>
+    <a href="/" className="py-1">Home</a>
+    <a href="/listings" className="py-1">View Listings</a>
+    <a href="/previous" className="py-1">Previous Listings</a>
+    <a href="/testimonials" className="py-1">View Testimonials</a>
+    <a href="/subscribe" className="py-1">Subscribe Page</a>
+    <button onClick={handleLogout} className="py-1 text-left text-red-400 mt-2">Log out</button>
+  </div>
+)}
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-8">
