@@ -49,7 +49,7 @@ export default function Contact() {
           <div>
             <div className="text-xs tracking-widest uppercase font-semibold mb-3" style={{color: "#c2446e", fontFamily: "sans-serif"}}>Get in Touch</div>
             <h1 className="text-3xl sm:text-4xl font-bold text-stone-900 mb-5" style={{letterSpacing: "-0.5px"}}>
-              Let&apos;s find you<br/>something wonderful.
+              Let&apos;s find you something wonderful.
             </h1>
             <p className="text-stone-500 text-base leading-relaxed mb-8" style={{fontFamily: "sans-serif"}}>
               The best way to reach me is always a phone call. I pick up on the first ring — no voicemail, no assistant, just me. Whether you&apos;re just starting to think about moving or need to sign a lease tomorrow, I&apos;m here.
@@ -78,9 +78,11 @@ export default function Contact() {
 
             
               href="tel:+16462419797"
-  className="mt-8 inline-flex items-center justify-center w-full sm:w-auto text-white font-semibold px-8 py-4 rounded-full text-sm transition-opacity hover:opacity-90"
-  style={{backgroundColor: "#c2446e", fontFamily: "sans-serif"}}
->{"📞 Call Aimee Now"}</a>
+              className="mt-8 inline-block w-full sm:w-auto text-center text-white font-semibold px-8 py-4 rounded-full text-sm transition-opacity hover:opacity-90"
+              style={{backgroundColor: "#c2446e", fontFamily: "sans-serif"}}
+            >
+              <span>Call Aimee Now</span>
+            </a>
           </div>
 
           <div className="space-y-3 mt-8 md:mt-0" style={{fontFamily: "sans-serif"}}>
