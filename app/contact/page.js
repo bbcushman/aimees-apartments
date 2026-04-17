@@ -78,11 +78,9 @@ export default function Contact() {
 
             
               href="tel:+16462419797"
-              className="mt-8 inline-flex items-center justify-center w-full sm:w-auto text-white font-semibold px-8 py-4 rounded-full text-sm transition-opacity hover:opacity-90"
-              style={{backgroundColor: "#c2446e", fontFamily: "sans-serif"}}
-            >
-              📞 Call Aimee Now
-            </a>
+  className="mt-8 inline-flex items-center justify-center w-full sm:w-auto text-white font-semibold px-8 py-4 rounded-full text-sm transition-opacity hover:opacity-90"
+  style={{backgroundColor: "#c2446e", fontFamily: "sans-serif"}}
+>{"📞 Call Aimee Now"}</a>
           </div>
 
           <div className="space-y-3 mt-8 md:mt-0" style={{fontFamily: "sans-serif"}}>
