@@ -51,7 +51,14 @@ export default function Contact() {
           <div>
             <div className="text-xs tracking-widest uppercase font-semibold mb-3" style={{color: "#c2446e", fontFamily: "sans-serif"}}>Get in Touch</div>
             <h1 className="text-3xl sm:text-4xl font-bold text-stone-900 mb-5" style={{letterSpacing: "-0.5px"}}>Let&apos;s find you something wonderful.</h1>
-            <p className="text-stone-500 text-base leading-relaxed mb-8" style={{fontFamily: "sans-serif"}}>The best way to reach me is always a phone call. I pick up on the first ring — no voicemail, no assistant, just me. Whether you&apos;re just starting to think about moving or need to sign a lease tomorrow, I&apos;m here.</p>
+            <p className="text-stone-500 text-base leading-relaxed mb-6" style={{fontFamily: "sans-serif"}}>
+              The best way to reach me is always a phone call. I pick up on the first ring — no voicemail, no assistant, just me. And on the rare occasion you catch me away from my phone, leave a message and I&apos;ll be back to you faster than you&apos;d expect.
+            </p>
+            <div className="bg-stone-50 rounded-xl p-5 border border-stone-100 mb-8" style={{fontFamily: "sans-serif"}}>
+              <p className="text-stone-600 text-sm leading-relaxed">
+                <span className="font-semibold text-stone-800">Not looking for an apartment right now?</span> That&apos;s okay — reach out anyway. Whether you have questions about the rental market, want a second opinion on a lease, or just need to talk through your options, Aimee is happy to help. No appointment needed, no obligation. Just a real conversation with someone who knows this city inside and out.
+              </p>
+            </div>
 
             <div className="space-y-6" style={{fontFamily: "sans-serif"}}>
               <div className="flex items-start gap-4">
@@ -85,7 +92,8 @@ export default function Contact() {
               "You need help putting together your application",
               "You have questions about a lease before you sign",
               "You manage a building and need a reliable broker partner",
-              "You just want to explore what's out there — no pressure",
+              "You just want to talk through your options — no pressure",
+              "You're not apartment hunting yet but want expert advice",
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-3 bg-white rounded-xl p-4 border border-stone-100 shadow-sm">
                 <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{backgroundColor: "#c2446e"}} />

@@ -48,7 +48,6 @@ export default function RealEstate() {
 
       {/* Hero */}
       <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-10 sm:pt-14 pb-10 grid md:grid-cols-5 gap-8 md:gap-12 items-center">
-        {/* Left — 3 cols */}
         <div className="md:col-span-3">
           <div className="text-xs tracking-widest uppercase mb-4 font-semibold" style={{color: "#c2446e", fontFamily: "sans-serif"}}>New York City Real Estate · Est. 20+ Years</div>
           <h1 className="text-4xl sm:text-5xl font-bold text-stone-900 leading-tight mb-5" style={{letterSpacing: "-1px"}}>
@@ -71,7 +70,6 @@ export default function RealEstate() {
           </div>
         </div>
 
-        {/* Right — 2 cols — hidden on small, shows below hero on mobile */}
         <div className="md:col-span-2 flex flex-col items-center gap-4 hidden md:flex">
           <div className="w-full aspect-square rounded-2xl overflow-hidden shadow-xl" style={{border: "3px solid #f3d0de"}}>
             <img src="https://i.imgur.com/n0r2Lfd.jpeg" alt="Aimee Grodanz" className="w-full h-full object-cover object-top" />
@@ -89,7 +87,7 @@ export default function RealEstate() {
         </div>
       </div>
 
-      {/* Aimee photo — mobile only, shows below hero text */}
+      {/* Aimee photo — mobile only */}
       <div className="md:hidden mx-4 mb-8">
         <div className="w-full max-w-xs mx-auto">
           <div className="w-full aspect-square rounded-2xl overflow-hidden shadow-xl" style={{border: "3px solid #f3d0de"}}>
@@ -110,7 +108,7 @@ export default function RealEstate() {
 
       {/* Photo strip */}
       <div className="max-w-5xl mx-auto px-4 sm:px-8 pb-12">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 h-40 sm:h-40 rounded-2xl overflow-hidden">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 h-40 rounded-2xl overflow-hidden">
           <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&q=80" className="w-full h-full object-cover" alt="apartment" />
           <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=80" className="w-full h-full object-cover" alt="living room" />
           <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400&q=80" className="w-full h-full object-cover hidden sm:block" alt="NYC" />
@@ -124,7 +122,6 @@ export default function RealEstate() {
       {/* For Renters + For Buildings */}
       <div className="max-w-5xl mx-auto px-4 sm:px-8 py-12 grid md:grid-cols-2 gap-10 md:gap-12">
 
-        {/* Renters */}
         <div>
           <div className="text-xs tracking-widest uppercase font-semibold mb-3" style={{color: "#c2446e", fontFamily: "sans-serif"}}>For Renters</div>
           <h2 className="text-2xl font-bold text-stone-900 mb-3">Finding you a home you&apos;ll love.</h2>
@@ -134,7 +131,7 @@ export default function RealEstate() {
           <div className="space-y-3" style={{fontFamily: "sans-serif"}}>
             {[
               { title: "Off-market access", desc: "20 years of relationships means listings before they hit StreetEasy." },
-              { title: "Always available", desc: "I pick up on the first call. No voicemail, no runaround." },
+              { title: "Always available", desc: "I pick up on the first call. And if by some miracle you catch me away from my phone, I'll call you back before you've had time to wonder." },
               { title: "Genuinely personal", desc: "I only show you places I'd be proud to recommend." },
               { title: "Low fees", desc: "Top service without the corporate price tag." },
             ].map((item, i) => (
@@ -152,10 +149,8 @@ export default function RealEstate() {
           </a>
         </div>
 
-        {/* Divider on mobile */}
         <div className="border-t border-stone-200 md:hidden" />
 
-        {/* Buildings */}
         <div className="md:border-l md:border-stone-200 md:pl-12">
           <div className="text-xs tracking-widest uppercase font-semibold mb-3" style={{color: "#c2446e", fontFamily: "sans-serif"}}>For Buildings & Landlords</div>
           <h2 className="text-2xl font-bold text-stone-900 mb-3">A partner you can count on.</h2>
@@ -185,8 +180,37 @@ export default function RealEstate() {
         </div>
       </div>
 
+      {/* More than just apartments */}
+      <div className="bg-white border-y border-stone-100 py-12">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8">
+          <div className="text-xs tracking-widest uppercase font-semibold mb-3 text-center" style={{color: "#c2446e", fontFamily: "sans-serif"}}>More Than Just Apartments</div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 mb-4 text-center">Not sure where to start? Just call.</h2>
+          <p className="text-stone-500 text-base leading-relaxed max-w-2xl mx-auto text-center mb-8" style={{fontFamily: "sans-serif"}}>
+            You don&apos;t need to be actively looking for an apartment to reach out. Aimee is happy to talk through your situation, answer questions about the rental market, review a lease you&apos;re unsure about, or just give you an honest read on what your budget can get you in different neighborhoods. No agenda, no pressure — just real advice from someone who&apos;s seen it all.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-6" style={{fontFamily: "sans-serif"}}>
+            {[
+              { emoji: "💬", title: "Free consultations", desc: "Not sure what neighborhood fits your lifestyle and budget? Aimee will talk it through with you — no strings attached." },
+              { emoji: "📋", title: "Lease reviews", desc: "Before you sign anything, run it by Aimee. She'll flag anything unusual and make sure you know what you're agreeing to." },
+              { emoji: "🗺️", title: "Market advice", desc: "Wondering what $2,500/month actually gets you right now? Aimee knows the market cold and will give you a straight answer." },
+            ].map((item, i) => (
+              <div key={i} className="bg-stone-50 rounded-xl p-5 border border-stone-100">
+                <div className="text-2xl mb-3">{item.emoji}</div>
+                <h4 className="font-bold text-stone-800 text-sm mb-2">{item.title}</h4>
+                <p className="text-stone-500 text-xs leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <a href="tel:+16462419797" className="inline-block text-white font-semibold px-8 py-3 rounded-full text-sm hover:opacity-90 transition-opacity" style={{backgroundColor: "#c2446e", fontFamily: "sans-serif"}}>
+              Call Aimee — (646) 241-9797
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* Testimonials */}
-      <div className="bg-white border-y border-stone-100 py-10">
+      <div className="bg-stone-50 border-y border-stone-100 py-10">
         <div className="max-w-5xl mx-auto px-4 sm:px-8">
           <div className="text-xs tracking-widest uppercase font-semibold mb-8 text-center" style={{color: "#c2446e", fontFamily: "sans-serif"}}>What People Say</div>
           <div className="grid md:grid-cols-3 gap-6 md:gap-8">
