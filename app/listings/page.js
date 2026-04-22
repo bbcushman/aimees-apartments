@@ -92,16 +92,31 @@ export default function Listings() {
                       <h3 className="font-bold text-stone-900 text-base">{listing.address}</h3>
                       <p className="text-stone-400 text-sm">{listing.neighborhood}</p>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right shrink-0 ml-4">
                       <div className="font-bold text-lg" style={{color: "#c2446e"}}>${listing.rent?.toLocaleString()}/mo</div>
                       <div className="text-stone-400 text-xs">{listing.beds} bed · {listing.baths} bath</div>
                     </div>
                   </div>
-                  <p className="text-stone-500 text-sm leading-relaxed mb-4">{listing.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {listing.availability_date && <span className="text-xs bg-stone-100 text-stone-500 px-3 py-1 rounded-full">Available {listing.availability_date}</span>}
-                    {listing.pet_policy && <span className="text-xs bg-stone-100 text-stone-500 px-3 py-1 rounded-full">{listing.pet_policy}</span>}
-                    {listing.laundry && <span className="text-xs bg-stone-100 text-stone-500 px-3 py-1 rounded-full">{listing.laundry}</span>}
+                  {listing.description && <p className="text-stone-500 text-sm leading-relaxed mb-4">{listing.description}</p>}
+                  <div className="grid grid-cols-2 gap-2 mb-4">
+                    {listing.availability_date && (
+                      <div className="bg-stone-50 rounded-lg px-3 py-2">
+                        <p className="text-xs text-stone-400 font-semibold uppercase tracking-widest mb-0.5">Available</p>
+                        <p className="text-xs text-stone-600">{listing.availability_date}</p>
+                      </div>
+                    )}
+                    {listing.pet_policy && (
+                      <div className="bg-stone-50 rounded-lg px-3 py-2">
+                        <p className="text-xs text-stone-400 font-semibold uppercase tracking-widest mb-0.5">Pets</p>
+                        <p className="text-xs text-stone-600">{listing.pet_policy}</p>
+                      </div>
+                    )}
+                    {listing.laundry && (
+                      <div className="bg-stone-50 rounded-lg px-3 py-2">
+                        <p className="text-xs text-stone-400 font-semibold uppercase tracking-widest mb-0.5">Laundry</p>
+                        <p className="text-xs text-stone-600">{listing.laundry}</p>
+                      </div>
+                    )}
                   </div>
                   <a href="tel:+16462419797" className="inline-block text-sm font-semibold" style={{color: "#c2446e"}}>📞 Call Aimee to schedule a showing</a>
                 </div>
@@ -112,9 +127,9 @@ export default function Listings() {
 
         {rented.length > 0 && (
           <div className="mt-16">
-            <div className="text-xs tracking-widest uppercase font-semibold mb-3" style={{color: "#c2446e", fontFamily: "sans-serif"}}>Previously Placed</div>
+            <div className="text-xs tracking-widest uppercase font-semibold mb-3" style={{color: "#c2446e", fontFamily: "sans-serif"}}>Previously Listed</div>
             <h2 className="text-2xl font-bold text-stone-900 mb-6">Homes Found</h2>
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
               {rented.map(listing => (
                 <div key={listing.id} className="bg-white rounded-xl border border-stone-100 p-4 opacity-75" style={{fontFamily: "sans-serif"}}>
                   {listing.photo_url && (

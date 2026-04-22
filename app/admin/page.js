@@ -55,6 +55,12 @@ function TestimonialsTab() {
   );
 }
 
+const emptyForm = {
+  address: "", neighborhood: "", rent: "", beds: "", baths: "",
+  availability_date: "", pet_policy: "", laundry: "",
+  description: "", photo_url: "", contact_note: "", status: "Active"
+};
+
 export default function Admin() {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState("");
@@ -64,11 +70,8 @@ export default function Admin() {
   const [tab, setTab] = useState("listings");
   const [loading, setLoading] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [form, setForm] = useState({
-    address: "", neighborhood: "", rent: "", beds: "", baths: "",
-    availability_date: "", pet_policy: "", laundry: "",
-    description: "", photo_url: "", contact_note: "", status: "Active"
-  });
+  const [form, setForm] = useState(emptyForm);
+  const [editingId, setEditingId] = useState(null);
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -113,6 +116,36 @@ export default function Admin() {
     }
   }, [authed]);
 
+  function startEditing(listing) {
+    setEditingId(listing.id);
+    setForm({
+      address: listing.address || "",
+      neighborhood: listing.neighborhood || "",
+      rent: listing.rent || "",
+      beds: listing.beds || "",
+      baths: listing.baths || "",
+      availability_date: listing.availability_date || "",
+      pet_policy: listing.pet_policy || "",
+      laundry: listing.laundry || "",
+      description: listing.description || "",
+      photo_url: listing.photo_url || "",
+      contact_note: listing.contact_note || "",
+      status: listing.status || "Active",
+    });
+    setPhotoFile(null);
+    setPhotoPreview(listing.photo_url || null);
+    setSuccess("");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function cancelEditing() {
+    setEditingId(null);
+    setForm(emptyForm);
+    setPhotoFile(null);
+    setPhotoPreview(null);
+    setSuccess("");
+  }
+
   function handlePhotoChange(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -138,23 +171,31 @@ export default function Admin() {
       const uploaded = await uploadPhoto();
       if (uploaded) photoUrl = uploaded;
     }
-    const { error } = await supabase.from("listings").insert([{
-      ...form,
-      photo_url: photoUrl,
-      rent: parseInt(form.rent) || null,
-    }]);
-    if (error) {
-      setSuccess("Error saving listing: " + error.message);
+    const payload = { ...form, photo_url: photoUrl, rent: parseInt(form.rent) || null };
+
+    if (editingId) {
+      const { error } = await supabase.from("listings").update(payload).eq("id", editingId);
+      if (error) {
+        setSuccess("Error updating listing: " + error.message);
+      } else {
+        setSuccess("Listing updated successfully!");
+        setEditingId(null);
+        setForm(emptyForm);
+        setPhotoFile(null);
+        setPhotoPreview(null);
+        fetchListings();
+      }
     } else {
-      setSuccess("Listing added successfully!");
-      setForm({
-        address: "", neighborhood: "", rent: "", beds: "", baths: "",
-        availability_date: "", pet_policy: "", laundry: "",
-        description: "", photo_url: "", contact_note: "", status: "Active"
-      });
-      setPhotoFile(null);
-      setPhotoPreview(null);
-      fetchListings();
+      const { error } = await supabase.from("listings").insert([payload]);
+      if (error) {
+        setSuccess("Error saving listing: " + error.message);
+      } else {
+        setSuccess("Listing added successfully!");
+        setForm(emptyForm);
+        setPhotoFile(null);
+        setPhotoPreview(null);
+        fetchListings();
+      }
     }
     setSaving(false);
   }
@@ -210,7 +251,6 @@ export default function Admin() {
   return (
     <div className="min-h-screen bg-stone-50" style={{fontFamily: "sans-serif"}}>
 
-      {/* Nav */}
       <div className="bg-white border-b border-stone-200">
         <div className="px-4 sm:px-8 py-4 flex items-center justify-between">
           <a href="/" className="font-bold" style={{color: "#c2446e"}}>Aimee's Apartments — Admin</a>
@@ -223,20 +263,20 @@ export default function Admin() {
           <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-stone-600 text-xl p-2">☰</button>
         </div>
         {menuOpen && (
-  <div className="md:hidden bg-white border-t border-stone-100 px-6 py-4 flex flex-col gap-4 text-sm text-stone-600">
-    <p className="text-xs uppercase tracking-widest text-stone-400 font-semibold">Admin</p>
-    <button onClick={() => { setTab("listings"); setMenuOpen(false); }} className="py-1 text-left">Listings</button>
-    <button onClick={() => { setTab("subscribers"); setMenuOpen(false); }} className="py-1 text-left">Subscribers</button>
-    <button onClick={() => { setTab("testimonials"); setMenuOpen(false); }} className="py-1 text-left">Testimonials</button>
-    <p className="text-xs uppercase tracking-widest text-stone-400 font-semibold mt-2">Public Pages</p>
-    <a href="/" className="py-1">Home</a>
-    <a href="/listings" className="py-1">View Listings</a>
-    <a href="/previous" className="py-1">Previous Listings</a>
-    <a href="/testimonials" className="py-1">View Testimonials</a>
-    <a href="/subscribe" className="py-1">Subscribe Page</a>
-    <button onClick={handleLogout} className="py-1 text-left text-red-400 mt-2">Log out</button>
-  </div>
-)}
+          <div className="md:hidden bg-white border-t border-stone-100 px-6 py-4 flex flex-col gap-4 text-sm text-stone-600">
+            <p className="text-xs uppercase tracking-widest text-stone-400 font-semibold">Admin</p>
+            <button onClick={() => { setTab("listings"); setMenuOpen(false); }} className="py-1 text-left">Listings</button>
+            <button onClick={() => { setTab("subscribers"); setMenuOpen(false); }} className="py-1 text-left">Subscribers</button>
+            <button onClick={() => { setTab("testimonials"); setMenuOpen(false); }} className="py-1 text-left">Testimonials</button>
+            <p className="text-xs uppercase tracking-widest text-stone-400 font-semibold mt-2">Public Pages</p>
+            <a href="/" className="py-1">Home</a>
+            <a href="/listings" className="py-1">View Listings</a>
+            <a href="/previous" className="py-1">Previous Listings</a>
+            <a href="/testimonials" className="py-1">View Testimonials</a>
+            <a href="/subscribe" className="py-1">Subscribe Page</a>
+            <button onClick={handleLogout} className="py-1 text-left text-red-400 mt-2">Log out</button>
+          </div>
+        )}
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-8">
@@ -256,7 +296,12 @@ export default function Admin() {
         {tab === "listings" && (
           <>
             <div className="bg-white rounded-xl border border-stone-200 p-6 mb-10">
-              <h2 className="font-bold text-stone-900 text-lg mb-6">Add New Listing</h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="font-bold text-stone-900 text-lg">{editingId ? "Edit Listing" : "Add New Listing"}</h2>
+                {editingId && (
+                  <button onClick={cancelEditing} className="text-xs text-stone-400 hover:text-stone-600 border border-stone-200 px-3 py-1.5 rounded-full">Cancel Edit</button>
+                )}
+              </div>
               <div className="grid md:grid-cols-2 gap-4">
                 {[
                   { label: "Address", key: "address", placeholder: "123 Main St, Apt 4B" },
@@ -297,14 +342,14 @@ export default function Admin() {
                 <div className="flex items-start gap-4">
                   <label className="cursor-pointer bg-stone-50 border-2 border-dashed border-stone-200 rounded-xl px-6 py-4 text-sm text-stone-400 hover:border-stone-400 transition-colors text-center">
                     <div className="text-2xl mb-1">📷</div>
-                    <div>Click to upload photo</div>
+                    <div>{editingId ? "Upload new photo" : "Click to upload photo"}</div>
                     <div className="text-xs mt-1">JPG, PNG up to 50MB</div>
                     <input type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
                   </label>
                   {photoPreview && (
                     <div className="relative">
                       <img src={photoPreview} alt="preview" className="w-32 h-24 object-cover rounded-xl border border-stone-200" />
-                      <button onClick={() => { setPhotoFile(null); setPhotoPreview(null); }} className="absolute -top-2 -right-2 bg-white border border-stone-200 rounded-full w-6 h-6 text-xs text-stone-400 hover:text-red-400">✕</button>
+                      <button onClick={() => { setPhotoFile(null); setPhotoPreview(null); setForm({...form, photo_url: ""}); }} className="absolute -top-2 -right-2 bg-white border border-stone-200 rounded-full w-6 h-6 text-xs text-stone-400 hover:text-red-400">✕</button>
                     </div>
                   )}
                 </div>
@@ -313,7 +358,7 @@ export default function Admin() {
                   type="text"
                   placeholder="https://..."
                   value={form.photo_url}
-                  onChange={e => setForm({...form, photo_url: e.target.value})}
+                  onChange={e => { setForm({...form, photo_url: e.target.value}); setPhotoPreview(e.target.value); }}
                   className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-stone-400 mt-1"
                 />
               </div>
@@ -345,7 +390,7 @@ export default function Admin() {
                 className="mt-5 text-white font-semibold px-8 py-3 rounded-full text-sm transition-opacity hover:opacity-90 disabled:opacity-50"
                 style={{backgroundColor: "#c2446e"}}
               >
-                {saving ? "Saving..." : "Add Listing"}
+                {saving ? "Saving..." : editingId ? "Save Changes" : "Add Listing"}
               </button>
             </div>
 
@@ -357,7 +402,7 @@ export default function Admin() {
             ) : (
               <div className="space-y-3 pb-10">
                 {listings.map(listing => (
-                  <div key={listing.id} className="bg-white rounded-xl border border-stone-100 p-4 flex items-start gap-4">
+                  <div key={listing.id} className={`bg-white rounded-xl border p-4 flex items-start gap-4 ${editingId === listing.id ? "border-rose-200 bg-rose-50" : "border-stone-100"}`}>
                     {listing.photo_url && (
                       <img src={listing.photo_url} alt="" className="w-20 h-16 object-cover rounded-lg shrink-0" />
                     )}
@@ -372,6 +417,7 @@ export default function Admin() {
                       {listing.description && <p className="text-stone-500 text-xs mt-1 truncate">{listing.description}</p>}
                     </div>
                     <div className="flex flex-col sm:flex-row gap-2 shrink-0">
+                      <button onClick={() => startEditing(listing)} className="text-xs border border-stone-200 text-stone-500 px-3 py-1.5 rounded-full hover:bg-stone-50">Edit</button>
                       {listing.status === "Active" ? (
                         <button onClick={() => updateStatus(listing.id, "Rented")} className="text-xs border border-stone-200 text-stone-500 px-3 py-1.5 rounded-full hover:bg-stone-50">Mark Rented</button>
                       ) : (
